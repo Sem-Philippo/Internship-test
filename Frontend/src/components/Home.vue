@@ -1,14 +1,14 @@
 <script>
-import ArticleTable from "./ArticleTable.vue";
+import DishTable from "./DishTable.vue";
 
 export default {
-  components: { ArticleTable },
+  components: { DishTable },
 };
 </script>
 
 <template>
-  <h1>Welcome to the Article App!</h1>
-  <ArticleTable />
+  <h1>Welcome to the dish application!</h1>
+  <DishTable />
 </template>
 
 <style lang="css" scoped></style>
