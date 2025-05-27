@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "./components/Home.vue";
-import { createPinia } from "pinia";
 
 import "./assets/main.css";
 
@@ -22,6 +21,5 @@ const router = createRouter({
 const app = createApp(App);
 
 app.use(router);
-app.use(createPinia());
 
 app.mount("#app");
