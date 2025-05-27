@@ -1,17 +1,30 @@
 <script>
 import DishItem from "./DishItem.vue";
+import DishModal from "./DishModal.vue";
 import axios from "axios";
 import { API_ENDPOINTS } from "@/config";
 
 export default {
-  components: { DishItem },
+  components: { DishItem, DishModal },
   data() {
     return {
+        showModal: false,
         dishes: [],
+        updatingDish: null, //Dish storage for update function
         isLoading: true, // Loading state flag
         error: null, // Error message storage
         success: null, // Success message storage
     };
+  },
+  methods: {
+    EditDish(dish){
+        console.log(dish);
+        this.updatingDish = dish;
+        this.showModal = true;
+    },
+    CloseModal() {
+        this.showModal = false;
+    }
   },
   async mounted() {
     try {
@@ -32,6 +45,7 @@ export default {
 </script>
 
 <template>
+    <DishModal v-if="showModal" :dish="this.updatingDish" @closeModal="CloseModal"/>
     <table class="dish-table">
         <thead>
         <tr>
@@ -46,7 +60,7 @@ export default {
         </tr>
         </thead>
         <tbody v-for="item in this.dishes">
-            <DishItem :dish="item"/>
+            <DishItem :dish="item" @EditDish="EditDish"/>
         </tbody>
     </table>
 </template>
@@ -68,9 +82,5 @@ export default {
 }
 tbody{
     background-color: lightgrey;
-    /*border: 5px, solid, white;
-    border-top-width: 0px;
-    border-left-width: 0px;
-    border-right-width: 0px;*/
 }
 </style>

@@ -1,5 +1,6 @@
 <script>
 import { API_ENDPOINTS } from "@/config";
+import axios from "axios";
 export default {
     data() {
         return {
@@ -14,24 +15,22 @@ export default {
     methods: {
         editDish() {
             console.log("editing dish with id" + this.dish.id);
+            this.$emit("EditDish", this.dish);
         },
         async deleteDish() {
-            console.log("deleting dish with id" + this.dish.id);
-            try {
-                console.log("testing");
-                this.isLoading = true;
-                console.log(this.isLoading);
-                console.log(`${API_ENDPOINTS.dishes}/${this.dish.id}`);
-                const response = await axios.delete(
-                    `${API_ENDPOINTS.dishes}/${this.dish.id}`
-                );
-                console.log("data: " + response.data);
-                this.dishes = response.data;
-            } catch (error) {
-                this.error = error.message || "An error occurred";
-            } finally {
-                console.log("success?");
-                this.isLoading = false;
+            if (confirm(`Are you sure you want to delete "${this.dish.Name}"?`)) {
+                console.log("deleting dish with id" + this.dish.id);
+                try {
+                    this.isLoading = true;
+                    const response = await axios.delete(
+                        `${API_ENDPOINTS.dishes}/${this.dish.id}`
+                    );
+                    this.dishes = response.data;
+                } catch (error) {
+                    this.error = error.message || "An error occurred";
+                } finally {
+                    this.isLoading = false;
+                }
             }
         }
     },
